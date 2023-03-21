@@ -20,7 +20,7 @@ import sweeperlib as sw
 from pathlib import Path
 
 scoreboard_location = Path(__file__).with_name("scoreboard.csv")
-sprites_location = os.path.join(__file__, ".." , "sprites")
+sprites_location = "sprites"
 
 state = {
     "field": [],
@@ -110,7 +110,8 @@ def floodfill(player_field, field, starting_x, starting_y):
                 elif field[step[1]+row][step[0]+col] != "x":
                     field[step[1]+row][step[0]+col]=str(count_mines(step[0]+col,step[1]+row,field))
                     player_field[step[1]+row][step[0]+col] = field[step[1]+row][step[0]+col]
-                    safe.append((step[0]+col, step[1]+row))
+                    if field[step[1]+row][step[0]+col] == "0":
+                        safe.append((step[0]+col, step[1]+row))
                     state["remaining"] -= 1
 
     if state["remaining"] == state["mines"]:
